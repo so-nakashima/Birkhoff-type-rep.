@@ -11,6 +11,8 @@ public:
 	//virtual std::set<std::string> join(std::set<std::string>, std::set<std::string>);
 	//virtual std::set<std::string> meet(std::set<std::string>, std::set<std::string>);
 	lattice(std::istream&);
+	std::set<std::string> span(std::set<std::string>);
+	bool valid(std::set<std::string>);
 protected:
 	std::istream& read(std::istream&);
 	//std::set<int> join_int(std::set<int>, std::set<int>);
@@ -18,7 +20,6 @@ protected:
 	//std::map<std::string, int> string2int;
 	//std::vector<std::string> int2string;
 	std::set<std::string> labels;
-	bool valid(std::set<std::string>);
 	std::map<std::string, std::string> order;
 	//std::set<std::string> reduce(std::set<std::string>);
 };

@@ -14,6 +14,10 @@
 int main(){
 	std::ifstream file("testlattice1.txt");
 	lattice l(file);
-
+	std::set<std::string> s;
+	s.insert("a");
+	s.insert("b");
+	s.insert("hoge");
+	std::cout << l.valid(s) << std::endl;
 	return 0;
 }

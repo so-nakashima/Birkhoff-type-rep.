@@ -10,6 +10,7 @@
 using std::string;
 using std::istream;
 using std::vector;
+using std::set;
 
 std::vector<std::string> split(const std::string &str, char sep);
 
@@ -38,6 +39,17 @@ istream& lattice::read(istream& in){
 lattice::lattice(istream& in){
 	read(in);
 }
+
+bool lattice::valid(set<string> elem){
+	auto itr = elem.begin();
+	for(itr; itr != elem.end(); itr++){
+		string base = *itr;
+		if(labels.find(base) == labels.end() ||(order[base] != "__BOTTOM" && elem.find(order[base]) == elem.end()))
+			return false;
+	}
+	return true;
+}
+
 
 std::vector<std::string> split(const std::string &str, char sep)
 {
