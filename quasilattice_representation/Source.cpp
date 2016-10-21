@@ -18,8 +18,8 @@ int main(){
 	std::set<std::string> s,t;
 	s.insert("a");
 	s.insert("b");
-	t.insert("c");
-	std::set<std::string> hoge = l.join(s,t);
+	t.insert("a");
+	std::set<std::string> hoge = l.meet(s,t);
 
 	return 0;
 }

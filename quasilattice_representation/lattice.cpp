@@ -6,6 +6,7 @@
 #include<map>
 #include<iterator>
 #include<algorithm>
+#include<assert.h>
 
 
 using std::string;
@@ -21,12 +22,15 @@ istream& lattice::read(istream& in){
 	in >> n;
 	getline(in, str);
 	for(int i = 0; i != n; i++){
-		if(!std::getline(in, str))
-			throw "Reading error in lattice::read";
+		if(!std::getline(in, str)){
+			assert(0 && "reading error");
+		}
 		vector<string> v = split(str, ' ');
 		_ASSERT(0 < v.size() && v.size() <= 2);
-		if(labels.find(v[0]) != labels.end())
-			throw "Some element is defined twice";
+		/*if(labels.find(v[0]) != labels.end()){
+			 std::cout << "Some element is defined twice" << std::endl;
+		}*/
+		assert(labels.find(v[0]) == labels.end());
 		labels.insert(v[0]);
 		if(v.size() == 1)
 			order[v[0]] = "__BOTTOM";
@@ -52,13 +56,26 @@ bool lattice::valid(set<string> elem){
 }
 
 std::set<std::string> lattice::join(std::set<std::string> s1, std::set<std::string> s2){
+	/*
 	if(!valid(s1) || !valid(s2))
-		throw "Taking lattice::join of invalid representation of elements";
+		throw "Taking lattice::join of invalid representations of elements";
+		*/
+	assert( valid(s1) && valid(s2));
 	set<string> res;
 	std::set_union(s1.begin(), s1.end(), s2.begin(), s2.end(),std::inserter(res, res.begin()));
 	return res;
 }
-//std::set<std::string> meet(std::set<std::string>, std::set<std::string>);
+
+std::set<std::string> lattice::meet(std::set<std::string> s1, std::set<std::string> s2){
+	/*
+	if(!valid(s1) || !valid(s2))
+		throw "Taking lattice::meet of invalid representations of elements";
+		*/
+	assert( valid(s1) && valid(s2));
+	set<string> res;
+	std::set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),std::inserter(res, res.begin()));
+	return res;
+}
 
 std::vector<std::string> split(const std::string &str, char sep)
 {
