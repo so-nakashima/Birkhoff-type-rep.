@@ -14,7 +14,7 @@
 int main(){
 
 	std::ifstream file("testlattice1.txt");
-	lattice l(file);
+	distributiveLattice l(file);
 	std::set<std::string> s,t;
 	s.insert("a");
 	s.insert("b");

@@ -16,7 +16,7 @@ using std::set;
 
 std::vector<std::string> split(const std::string &str, char sep);
 
-istream& lattice::read(istream& in){
+istream& distributiveLattice::read(istream& in){
 	string str;
 	int n;
 	in >> n;
@@ -41,11 +41,11 @@ istream& lattice::read(istream& in){
 	return in;
 };
 
-lattice::lattice(istream& in){
+distributiveLattice::distributiveLattice(istream& in){
 	read(in);
 }
 
-bool lattice::valid(set<string> elem){
+bool distributiveLattice::valid(set<string> elem){
 	auto itr = elem.begin();
 	for(itr; itr != elem.end(); itr++){
 		string base = *itr;
@@ -55,7 +55,7 @@ bool lattice::valid(set<string> elem){
 	return true;
 }
 
-std::set<std::string> lattice::join(std::set<std::string> s1, std::set<std::string> s2){
+std::set<std::string> distributiveLattice::join(std::set<std::string> s1, std::set<std::string> s2){
 	/*
 	if(!valid(s1) || !valid(s2))
 		throw "Taking lattice::join of invalid representations of elements";
@@ -66,7 +66,7 @@ std::set<std::string> lattice::join(std::set<std::string> s1, std::set<std::stri
 	return res;
 }
 
-std::set<std::string> lattice::meet(std::set<std::string> s1, std::set<std::string> s2){
+std::set<std::string> distributiveLattice::meet(std::set<std::string> s1, std::set<std::string> s2){
 	/*
 	if(!valid(s1) || !valid(s2))
 		throw "Taking lattice::meet of invalid representations of elements";
