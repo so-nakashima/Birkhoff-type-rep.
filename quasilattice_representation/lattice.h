@@ -8,10 +8,10 @@
 
 class lattice{
 public:
-	//virtual std::set<std::string> join(std::set<std::string>, std::set<std::string>);
+	virtual std::set<std::string> join(std::set<std::string>, std::set<std::string>);
 	//virtual std::set<std::string> meet(std::set<std::string>, std::set<std::string>);
 	lattice(std::istream&);
-	std::set<std::string> span(std::set<std::string>);
+	//std::set<std::string> principal_ideal(std::set<std::string>);
 	bool valid(std::set<std::string>);
 protected:
 	std::istream& read(std::istream&);

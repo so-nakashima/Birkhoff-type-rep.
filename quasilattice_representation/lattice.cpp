@@ -5,6 +5,7 @@
 #include<math.h>
 #include<map>
 #include<iterator>
+#include<algorithm>
 
 
 using std::string;
@@ -50,6 +51,14 @@ bool lattice::valid(set<string> elem){
 	return true;
 }
 
+std::set<std::string> lattice::join(std::set<std::string> s1, std::set<std::string> s2){
+	if(!valid(s1) || !valid(s2))
+		throw "Taking lattice::join of invalid representation of elements";
+	set<string> res;
+	std::set_union(s1.begin(), s1.end(), s2.begin(), s2.end(),std::inserter(res, res.begin()));
+	return res;
+}
+//std::set<std::string> meet(std::set<std::string>, std::set<std::string>);
 
 std::vector<std::string> split(const std::string &str, char sep)
 {
