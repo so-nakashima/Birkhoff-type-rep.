@@ -34,6 +34,26 @@ productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat,
 			}
 			allowed.push_back(oraclecopy_bind1);
 		}
+		//construction of projections and minimums
+		for(int i = 0; i != power; i++){
+			set<set<string>> ithproj;
+			set<string> ithmin;
+			bool flag = true;
+			for(auto itr = lattice->elements.begin(); itr != lattice->elements.end(); itr++){
+				if(allowed[i][i][*itr][*itr] && flag){
+					ithproj.insert(*itr);
+					ithmin = *itr;
+					flag = false;
+				}
+				else if(allowed[i][i][*itr][*itr]){
+					ithmin = lattice->meet(ithmin, *itr);
+					ithproj.insert(*itr);
+				}
+			}
+			projections.push_back(ithproj);
+			minimum.push_back(ithmin);
+		}
+		/*
 		//construction for groundBases
 		for(int i = 0; i != power; i++){
 			map<string, vector<set<string>>> ithBase;
@@ -69,6 +89,7 @@ productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat,
 			}
 			groundBases.push_back(ithBase);
 		}
+		*/
 }
 
 std::pair<bool, std::vector<std::set<std::string>>> productDistributiveLattice::calculateBase(int i, std::string a){
