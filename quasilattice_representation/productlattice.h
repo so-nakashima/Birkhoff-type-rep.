@@ -7,15 +7,15 @@
 
 class productDistributiveLattice{
 public:
-	productDistributiveLattice(const distributiveLattice*, int, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)>);
-	bool compare(int, int, std::set<std::string>, std::set<std::string>);
+	productDistributiveLattice(distributiveLattice*, int, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)>);
+	bool compare(int, std::string, int, std::string);
 	bool menbership(std::vector<int>, std::vector<std::set<std::string>>);
 	void graphicRepresentation();
 	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(std::vector<int>, std::vector<std::set<std::string>>);
 	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(int, std::string);
 	
 protected:
-	const distributiveLattice* lattice;
+	distributiveLattice* lattice;
 	const int power;
 	bool equality(int, int, std::set<std::string>, std::set<std::string>);
 	std::vector<std::map<std::string, std::vector<std::set<std::string>>>> groundBases; //groundBases[i][a] = e^i_a in my notes

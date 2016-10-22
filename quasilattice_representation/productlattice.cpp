@@ -8,6 +8,7 @@
 #include<fstream>
 #include "lattice.h"
 #include "productlattice.h"
+#include<assert.h>
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
@@ -18,7 +19,7 @@ using std::set;
 using std::map;
 
 
-productDistributiveLattice::productDistributiveLattice(const distributiveLattice* lat, int n, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)> oracle)
+productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat, int n, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)> oracle)
 	: power(n), lattice(lat){
 		//construction for allowed
 		for(int i = 0; i != power; i++){
@@ -39,7 +40,8 @@ productDistributiveLattice::productDistributiveLattice(const distributiveLattice
 			for(auto itr = lattice->labels.begin(); itr != lattice->labels.end(); itr++){
 				vector<set<string>> base;
 				set<string> singleton; singleton.insert(*itr);
-				if(allowed[i][i][singleton][singleton]){
+				set<string> ideal = lattice->principal_ideal(singleton);
+				if(allowed[i][i][ideal][ideal]){
 					for(int j = 0; j != power; j++){
 						if(j == i){
 							set<string> temp; temp.insert(*itr);
@@ -49,11 +51,11 @@ productDistributiveLattice::productDistributiveLattice(const distributiveLattice
 							set<string> jthComp;
 							bool flag = true;
 							for(auto itrelem = lattice->elements.begin(); itrelem != lattice->elements.end(); itrelem++){
-								if(allowed[i][j][singleton][*itrelem] && flag){
+								if(allowed[i][j][ideal][*itrelem] && flag){
 									jthComp = *itrelem;
 									flag = false;
 								}
-								else if(allowed[i][j][singleton][*itrelem]){
+								else if(allowed[i][j][ideal][*itrelem]){
 									set<string> forCopy;
 									std::set_intersection(jthComp.begin(), jthComp.end(), itrelem->begin(), itrelem-> end(), inserter(forCopy, forCopy.begin()));
 									jthComp = forCopy;
@@ -71,6 +73,12 @@ productDistributiveLattice::productDistributiveLattice(const distributiveLattice
 
 std::pair<bool, std::vector<std::set<std::string>>> productDistributiveLattice::calculateBase(int i, std::string a){
 	set<string> sing; sing.insert(a);
-	return std::make_pair(allowed[i][i][sing][sing], groundBases[i][a]);
+	set<string> ideal = lattice->principal_ideal(sing);
+	return std::make_pair(allowed[i][i][ideal][ideal], groundBases[i][a]);
 }
 
+bool productDistributiveLattice::compare(int i, string s1, int j, string s2){
+	auto hoge = calculateBase(j, s2);
+	assert(hoge.first);
+	return hoge.second[i].find(s1)	!= hoge.second[i].end();
+}

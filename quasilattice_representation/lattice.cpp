@@ -7,6 +7,7 @@
 #include<iterator>
 #include<algorithm>
 #include<assert.h>
+#include<queue>
 
 
 using std::string;
@@ -95,7 +96,37 @@ std::set<std::string> distributiveLattice::meet(std::set<std::string> s1, std::s
 	return res;
 }
 
+bool distributiveLattice::compare(std::set<std::string> s1, std::set<std::string> s2){
+	assert(valid(s1) && valid(s2));
+	bool flag = true;
+	for(auto itr = s1.begin(); itr != s1.end(); itr++){
+		if(s2.find(*itr) == s2.end()){
+			flag = false;
+			break;
+		}
+	}
+	return flag;
+}
 
+std::set<std::string> distributiveLattice::principal_ideal(std::set<std::string> s){
+	 set<string> visited;
+	 std::queue<string> processing;
+	 set<string> res = s;
+	 for(auto itr = s.begin(); itr != s.end(); itr++){
+		 processing.push(*itr);
+		 visited.insert(*itr);
+	 }
+	 while(!processing.empty()){
+		 string now = processing.front();
+		 processing.pop();
+		 string next = order[now];
+		 if(next != "__BOTTOM" && visited.find(next) == visited.end()){
+			 processing.push(next);
+			 res.insert(next);
+		 }
+	 }
+	 return res;
+}
 
 //Followings are NOT my program
 
