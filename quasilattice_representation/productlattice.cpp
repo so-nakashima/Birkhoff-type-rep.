@@ -18,6 +18,37 @@ using std::vector;
 using std::set;
 using std::map;
 
+bool setEquality(set<string> s1, set<string> s2){
+	set<string> hoge;
+	std::set_symmetric_difference(s1.begin(), s1.end(), s2.begin(), s2.end(), inserter(hoge, hoge.begin()));
+	return hoge.size() == 0;
+}
+
+set<set<string>> irreducibleSets(distributiveLattice* lattice, set<set<string>> subuniv, set<string> minimum){
+	set<set<string>> res;
+	for(auto itr = subuniv.begin(); itr != subuniv.end(); itr++){
+		if(setEquality(minimum, *itr))
+			continue;
+		bool flag = true;
+		for(auto itr1 = subuniv.begin(); itr1 != subuniv.end(); itr1++){
+			if(setEquality(*itr1, *itr) || !lattice->compare(*itr1, *itr))
+				continue;
+			if(!flag)
+				break;
+			for(auto itr2 = subuniv.begin(); itr2 != subuniv.end(); itr2++){
+				if(setEquality(*itr2, *itr) || !lattice->compare(*itr2, *itr))
+					continue;
+				if(setEquality(lattice->join(*itr1, *itr2), *itr)){
+					flag = false;
+					break;
+				}
+			}
+		}
+		if(flag)
+			res.insert(*itr);
+	}
+	return res;
+}
 
 productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat, int n, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)> oracle)
 	: power(n), lattice(lat){
@@ -53,6 +84,12 @@ productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat,
 			projections.push_back(ithproj);
 			minimum.push_back(ithmin);
 		}
+
+		//construction of coordinate_irreducibles
+		for(int i = 0; i != power; i++){
+			coordinate_irreducibles.push_back(irreducibleSets(lattice, projections[i], minimum[i]));
+		}
+
 		/*
 		//construction for groundBases
 		for(int i = 0; i != power; i++){
