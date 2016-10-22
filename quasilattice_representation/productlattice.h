@@ -12,11 +12,12 @@ public:
 	bool menbership(std::vector<int>, std::vector<std::set<std::string>>);
 	void graphicRepresentation();
 	bool calculateBase(std::vector<int>, std::vector<std::set<std::string>>);
+	std::vector<std::vector<std::map<std::set<std::string>, std::map<std::set<std::string>, bool>>>> allowed;
 protected:
 	const distributiveLattice* lattice;
 	const int power;
 	bool equality(int, int, std::set<std::string>, std::set<std::string>);
-	std::map<std::set<std::string>, std::map<std::set<std::string>, bool>> allowed;
+	 //allowed[i][j][s1][s2] means "is there an elements S s.t. S[i] = s1 and S[j] = s2; 
 private:
 };
 
