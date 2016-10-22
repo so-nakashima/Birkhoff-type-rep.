@@ -15,6 +15,8 @@ using std::vector;
 using std::set;
 
 std::vector<std::string> split(const std::string &str, char sep);
+int ipow(int base, int exp);
+set<string> bit2stringset(int n, const distributiveLattice* lat);
 
 istream& distributiveLattice::read(istream& in){
 	string str;
@@ -43,6 +45,22 @@ istream& distributiveLattice::read(istream& in){
 
 distributiveLattice::distributiveLattice(istream& in){
 	read(in);
+	for(int i = 0; i != ipow(2, labels.size()); i++){
+		set<string> candidate = bit2stringset(i);
+		if(valid(candidate))
+			elements.insert(candidate);
+	}
+}
+
+set<string> distributiveLattice::bit2stringset(int n){
+	set<string> res;
+	auto itr = labels.begin();
+	for(int i = 0; i != labels.size(); i++, itr++){
+		if(n % 2 == 1)
+			res.insert(*itr);
+		n /= 2;
+	}
+	return res;
 }
 
 bool distributiveLattice::valid(set<string> elem){
@@ -77,6 +95,10 @@ std::set<std::string> distributiveLattice::meet(std::set<std::string> s1, std::s
 	return res;
 }
 
+
+
+//Followings are NOT my program
+
 std::vector<std::string> split(const std::string &str, char sep)
 {
     std::vector<std::string> v;        // 分割結果を格納するベクター
@@ -91,4 +113,18 @@ std::vector<std::string> split(const std::string &str, char sep)
         first = last;          // 次の処理のためにイテレータを設定
     }
     return v;
+}
+
+int ipow(int base, int exp)
+{
+    int result = 1;
+    while (exp)
+    {
+        if (exp & 1)
+            result *= base;
+        exp >>= 1;
+        base *= base;
+    }
+
+    return result;
 }

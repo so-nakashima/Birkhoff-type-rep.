@@ -7,14 +7,14 @@
 
 class productDistributiveLattice{
 public:
-	productDistributiveLattice(const distributiveLattice&, int, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)>);
+	productDistributiveLattice(const distributiveLattice*, int, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)>);
 	bool compare(int, int, std::set<std::string>, std::set<std::string>);
 	bool menbership(std::vector<int>, std::vector<std::set<std::string>>);
 	void graphicRepresentation();
 	bool calculateBase(std::vector<int>, std::vector<std::set<std::string>>);
 protected:
-	distributiveLattice* lattice;
-	int power;
+	const distributiveLattice* lattice;
+	const int power;
 	bool equality(int, int, std::set<std::string>, std::set<std::string>);
 	std::map<std::set<std::string>, std::map<std::set<std::string>, bool>> allowed;
 private:

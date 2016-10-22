@@ -7,6 +7,7 @@
 #include<iterator>
 #include<fstream>
 #include "lattice.h"
+#include "productlattice.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
@@ -19,7 +20,7 @@ int main(){
 	s.insert("a");
 	s.insert("b");
 	t.insert("a");
-	std::set<std::string> hoge = l.meet(s,t);
+	//std::cout << ipow(2,10) << std::endl;
 
 	return 0;
 }
