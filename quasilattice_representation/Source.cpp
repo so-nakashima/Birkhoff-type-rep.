@@ -16,7 +16,8 @@ using namespace std;
 bool oracle(int i, int j, std::set<std::string> s1, std::set<std::string> s2){
 	set<string> diff;
 	std::set_symmetric_difference(s1.begin(), s1.end(), s2.begin(), s2.end(), inserter(diff, diff.begin()));
-	return diff.size() == 0;
+	//return diff.size() == 0;
+	return true;
 }
 
 int main(){
@@ -27,9 +28,9 @@ int main(){
 	s.insert("a");
 	s.insert("b");
 	t.insert("a");
-	productDistributiveLattice pl(&l, 2, oracle);
+	productDistributiveLattice pl(&l, 3, oracle);
 
-	std::cout << pl.allowed[0][1][s][t] << std::endl;
-
+	auto hoge = pl.calculateBase(2, "a");
+	
 	return 0;
 }
