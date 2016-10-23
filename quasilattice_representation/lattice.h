@@ -5,6 +5,7 @@
 #include<map>
 #include<vector>
 #include<iostream>
+#include <bitset>
 
 class distributiveLattice{
 public:
@@ -19,8 +20,9 @@ public:
 	std::set<std::set<std::string>> elements;
 protected:
 	std::istream& read(std::istream&);
-	std::map<std::string, std::string> order;
-	std::set<std::string> bit2stringset(int);
+	std::vector<int> order;
+	//std::set<std::string> bit2stringset(int);
+	int irredusibleNo;
 	//std::set<int> join_int(std::set<int>, std::set<int>);
 	//std::set<int> meet_int(std::set<int>, std::set<int>);
 	//std::map<std::string, int> string2int;

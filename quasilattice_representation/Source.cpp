@@ -7,7 +7,7 @@
 #include<iterator>
 #include<fstream>
 #include "lattice.h"
-#include "productlattice.h"
+//#include "productlattice.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
@@ -34,7 +34,7 @@ int main(){
 
 	//cout << setEquality(s,t) << endl;
 
-	productDistributiveLattice pl(&l, 3, oracle);
+	//productDistributiveLattice pl(&l, 3, oracle);
 	//auto hoge = pl.calculateBase(1, "b");
 	//auto fuga = l.principal_ideal(s);
 	 
