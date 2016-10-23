@@ -22,6 +22,8 @@ productQuasiLattice::productQuasiLattice(quasiLattice* lat, int n, std::function
 	initializeAllowed(oracle);
 	initializeProjection();
 	initializeMinimum();
+	initializeCoordinate_irreducibles();
+	initializeGroundBases();
 }
 
 void productQuasiLattice::initializeAllowed(std::function<bool(int,int, int, int)> oracle){
@@ -56,4 +58,34 @@ void productQuasiLattice::initializeProjection(){
 void productQuasiLattice::initializeMinimum(){
 	for(int i = 0; i != power; i++)
 		minimum.push_back(lattice->minimum(projections[i]));
+}
+
+void productQuasiLattice::initializeCoordinate_irreducibles(){
+	for(int i = 0; i != power; i++)
+		coordinate_irreducibles.push_back(lattice->joinIrreducibles(projections[i]));
+}
+
+void productQuasiLattice::initializeGroundBases(){
+	for(int i = 0; i != power; i++){
+		map<int, vector<int>> ithBase;
+		for(int j = 0; j !=  coordinate_irreducibles[i].size(); j++){
+			int e = coordinate_irreducibles[i][j];
+			vector<int> ethBase;
+			for(int k = 0; k != power; k++){
+				if(i == k)
+					ethBase.push_back(e);
+				else{
+					vector<int> allowedpair;
+					for(int l = 0; l != projections[k].size(); l++){
+						int f = projections[k][l];
+						if(allowed[i][k][e][f])
+							allowedpair.push_back(f);
+					}
+					ethBase.push_back(lattice->minimum(allowedpair));
+				}
+			}
+			ithBase[e] = ethBase;
+		}
+		groundBases.push_back(ithBase);
+	}
 }
