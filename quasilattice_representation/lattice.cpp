@@ -51,7 +51,7 @@ int quasiLattice::meet(int i, int j){
 	return meetTable[i][j];
 }
 
-int quasiLattice::compare(int i, int j){
+bool quasiLattice::compare(int i, int j){
 	return i == meet(i,j);
 }
 
@@ -60,6 +60,15 @@ int quasiLattice::minimum(const std::vector<int>& subuniv){
 	int res = subuniv[0];
 	for(int i = 1; i != subuniv.size(); i++){
 		res = meet(res, subuniv[i]);
+	}
+	return res;
+}
+
+int quasiLattice::maximum(const std::vector<int>& subuniv){
+	assert(subuniv.size() != 0);
+	int res = subuniv[0];
+	for(int i = 1; i != subuniv.size(); i++){
+		res = join(res, subuniv[i]);
 	}
 	return res;
 }
@@ -94,3 +103,19 @@ vector<int> quasiLattice::joinIrreducibles(const vector<int>& subuniv){
 	}
 	return res;
 };
+
+vector<int> quasiLattice::lowerCover(const vector<int>& irreducibles){
+	vector<int> res;
+	for(int i = 0; i != irreducibles.size(); i++){
+		vector<int> lowerset;
+		for(int j = 0; j != irreducibles.size(); j++){
+			if(j != i && compare(irreducibles[j],irreducibles[i]))
+				lowerset.push_back(irreducibles[j]);
+		}
+		if(lowerset.size() > 0)
+			res.push_back(maximum(lowerset));
+		else
+			res.push_back(-1);
+	}
+	return res;
+}

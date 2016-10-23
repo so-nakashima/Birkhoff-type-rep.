@@ -23,6 +23,7 @@ productQuasiLattice::productQuasiLattice(quasiLattice* lat, int n, std::function
 	initializeProjection();
 	initializeMinimum();
 	initializeCoordinate_irreducibles();
+	initializeCoordinate_lowercovers();
 	initializeGroundBases();
 }
 
@@ -65,6 +66,12 @@ void productQuasiLattice::initializeCoordinate_irreducibles(){
 		coordinate_irreducibles.push_back(lattice->joinIrreducibles(projections[i]));
 }
 
+void productQuasiLattice::initializeCoordinate_lowercovers(){
+	for(int i = 0; i != power; i++){
+		coordinate_lowercovers.push_back(lattice->lowerCover(coordinate_irreducibles[i]));
+	}
+}
+
 void productQuasiLattice::initializeGroundBases(){
 	for(int i = 0; i != power; i++){
 		map<int, vector<int>> ithBase;
@@ -90,6 +97,6 @@ void productQuasiLattice::initializeGroundBases(){
 	}
 }
 
-bool productQuasiLattice::compare(int i, int a, int j, int b){
+bool productQuasiLattice::compare(int i, int a, int j, int b){ // Only For irreducible a and b
 	return lattice->compare(a,groundBases[j][b][i]);
 }

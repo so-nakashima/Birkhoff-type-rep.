@@ -12,11 +12,13 @@ public:
 	int join(int, int);
 	int meet(int, int);
 	quasiLattice(std::istream&);
-	int compare(int, int);
+	bool compare(int, int);
 	std::vector<int> joinIrreducibles(const std::vector<int>&);
 	int minimum(const std::vector<int>&);
+	int maximum(const std::vector<int>&);// may NOT be maximum if inconsistent pairs included!!
 	virtual ~quasiLattice(){};
 	int size;
+	std::vector<int> lowerCover(const std::vector<int>&); // Only for irreducible set; details are explained in productQuasiLattice::coordinate_lowercovers
 protected:
 	std::istream& read(std::istream&);
 	std::vector<std::vector<int>> joinTable;

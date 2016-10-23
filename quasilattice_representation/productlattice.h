@@ -18,6 +18,7 @@ public:
 	std::vector<int> minimum;
 	std::vector<std::vector<int>> projections; // projections[i] is proj_{i} B (here B is subalgebra)
 	std::vector<std::vector<int>> coordinate_irreducibles; // coordinate_irreducibles[i] is join-irreducible element in proj_{i}  B
+	std::vector<std::vector<int>> coordinate_lowercovers; //coordinate_lowercovers[i][e] = the unique lower cover of coordinate_irreducible[i][e]
 protected:
 	quasiLattice* lattice;
 	const int power;
@@ -28,6 +29,7 @@ protected:
 	void initializeMinimum();
 	void initializeCoordinate_irreducibles();
 	void initializeGroundBases();
+	void initializeCoordinate_lowercovers();
 private:
 };
 
