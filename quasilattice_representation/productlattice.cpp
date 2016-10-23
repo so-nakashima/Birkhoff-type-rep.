@@ -18,7 +18,7 @@ using std::vector;
 using std::set;
 using std::map;
 
-bool setEquality(set<string> s1, set<string> s2){
+bool setEquality(const set<string>& s1, const set<string>& s2){
 	set<string> hoge;
 	std::set_symmetric_difference(s1.begin(), s1.end(), s2.begin(), s2.end(), inserter(hoge, hoge.begin()));
 	return hoge.size() == 0;
@@ -50,7 +50,7 @@ set<set<string>> irreducibleSets(distributiveLattice* lattice, set<set<string>> 
 	return res;
 }
 
-productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat, int n, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)> oracle)
+productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat, int n, std::function<bool(int,int, const std::set<std::string>&, const std::set<std::string>&)> oracle)
 	: power(n), lattice(lat){
 		//construction for allowed
 		for(int i = 0; i != power; i++){
@@ -129,13 +129,13 @@ productDistributiveLattice::productDistributiveLattice(distributiveLattice* lat,
 		*/
 }
 
-std::pair<bool, std::vector<std::set<std::string>>> productDistributiveLattice::calculateBase(int i, std::string a){
+std::pair<bool, std::vector<std::set<std::string>>> productDistributiveLattice::calculateBase(int i, const std::string& a){
 	set<string> sing; sing.insert(a);
 	set<string> ideal = lattice->principal_ideal(sing);
 	return std::make_pair(allowed[i][i][ideal][ideal], groundBases[i][a]);
 }
 
-bool productDistributiveLattice::compare(int i, string s1, int j, string s2){
+bool productDistributiveLattice::compare(int i, const string& s1, int j, const string& s2){
 	auto hoge = calculateBase(j, s2);
 	assert(hoge.first);
 	return hoge.second[i].find(s1)	!= hoge.second[i].end();

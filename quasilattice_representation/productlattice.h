@@ -7,12 +7,12 @@
 
 class productDistributiveLattice{
 public:
-	productDistributiveLattice(distributiveLattice*, int, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)>); //oracle can be used for 1 coordinate as A[i][i]......
-	bool compare(int, std::string, int, std::string);
-	bool menbership(std::vector<int>, std::vector<std::set<std::string>>);
+	productDistributiveLattice(distributiveLattice*, int, std::function<bool(int,int, const std::set<std::string>&, const std::set<std::string>&)>); //oracle can be used for 1 coordinate as A[i][i]......
+	bool compare(int, const std::string&, int, const std::string&);
+	bool menbership(const std::vector<int>&, const std::vector<std::set<std::string>>&);
 	void graphicRepresentation();
-	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(std::vector<int>, std::vector<std::set<std::string>>);
-	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(int, std::string);
+	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(const std::vector<int>&, const std::vector<std::set<std::string>>&);
+	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(int, const std::string&);
 	std::vector<std::set<std::string>> minimum;
 	std::vector<std::set<std::set<std::string>>> projections; // projections[i] is proj_{i} B (here B is subalgebra)
 	std::vector<std::set<std::set<std::string>>> coordinate_irreducibles; // coordinate_irreducibles[i] is join-irreducible element in proj_{i}  B

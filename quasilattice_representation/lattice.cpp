@@ -74,7 +74,7 @@ bool distributiveLattice::valid(set<string> elem){
 	return true;
 }
 
-std::set<std::string> distributiveLattice::join(std::set<std::string> s1, std::set<std::string> s2){
+std::set<std::string> distributiveLattice::join(const std::set<std::string>& s1, const std::set<std::string>& s2){
 	/*
 	if(!valid(s1) || !valid(s2))
 		throw "Taking lattice::join of invalid representations of elements";
@@ -85,7 +85,7 @@ std::set<std::string> distributiveLattice::join(std::set<std::string> s1, std::s
 	return res;
 }
 
-std::set<std::string> distributiveLattice::meet(std::set<std::string> s1, std::set<std::string> s2){
+std::set<std::string> distributiveLattice::meet(const std::set<std::string>& s1, const std::set<std::string>& s2){
 	/*
 	if(!valid(s1) || !valid(s2))
 		throw "Taking lattice::meet of invalid representations of elements";
@@ -96,7 +96,7 @@ std::set<std::string> distributiveLattice::meet(std::set<std::string> s1, std::s
 	return res;
 }
 
-bool distributiveLattice::compare(std::set<std::string> s1, std::set<std::string> s2){
+bool distributiveLattice::compare(const std::set<std::string>& s1, const std::set<std::string>& s2){
 	assert(valid(s1) && valid(s2));
 	bool flag = true;
 	for(auto itr = s1.begin(); itr != s1.end(); itr++){
@@ -108,7 +108,7 @@ bool distributiveLattice::compare(std::set<std::string> s1, std::set<std::string
 	return flag;
 }
 
-std::set<std::string> distributiveLattice::principal_ideal(std::set<std::string> s){
+std::set<std::string> distributiveLattice::principal_ideal(const std::set<std::string>& s){
 	 set<string> visited;
 	 std::queue<string> processing;
 	 set<string> res = s;

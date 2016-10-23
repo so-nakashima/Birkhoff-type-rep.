@@ -13,7 +13,7 @@
 
 using namespace std;
 
-bool oracle(int i, int j, std::set<std::string> s1, std::set<std::string> s2){
+bool oracle(int i, int j, const std::set<std::string>& s1, const std::set<std::string>& s2){
 	set<string> diff;
 	set<string> so;
 	so.insert("c");
