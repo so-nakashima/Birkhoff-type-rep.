@@ -7,27 +7,19 @@
 #include<iostream>
 #include <bitset>
 
-class distributiveLattice{
+class quasiLattice{
 public:
-	virtual std::set<std::string> join(const std::set<std::string>&, const std::set<std::string>&);
-	virtual std::set<std::string> meet(const std::set<std::string>&, const std::set<std::string>&);
-	distributiveLattice(std::istream&);
-	std::set<std::string> principal_ideal(const std::set<std::string>&);
-	bool valid(const std::set<std::string>&);
-	bool compare(const std::set<std::string>&, const std::set<std::string>&);
-	virtual ~distributiveLattice(){};
-	std::set<std::string> labels;
-	std::set<std::set<std::string>> elements;
+	int join(int, int);
+	int meet(int, int);
+	quasiLattice(std::istream&);
+	int compare(int, int);
+	std::vector<int> joinIrreducibles(const std::vector<int>&);
+	virtual ~quasiLattice(){};
+	int size;
 protected:
 	std::istream& read(std::istream&);
-	std::map<std::string, std::string> order;
-	std::set<std::string> bit2stringset(int);
-	//int irredusibleNo;
-	//std::set<int> join_int(std::set<int>, std::set<int>);
-	//std::set<int> meet_int(std::set<int>, std::set<int>);
-	//std::map<std::string, int> string2int;
-	//std::vector<std::string> int2string;
-	//std::set<std::string> reduce(std::set<std::string>);
+	std::vector<std::vector<int>> joinTable;
+	std::vector<std::vector<int>> meetTable;
 };
 
 
