@@ -24,6 +24,8 @@ protected:
 	std::vector<std::vector<std::vector<int>>> groundBases; //groundBases[i][a] = e^i_a in my notes
 	std::vector<std::vector<std::vector<std::vector<bool>>>> allowed; //allowed[i][j][s1][s2] means "is there an elements S s.t. S[i] = s1 and S[j] = s2; 
 	void initializeAllowed(std::function<bool(int,int, int, int)>);
+	void initializeProjection();
+	void initializeMinimum();
 private:
 };
 

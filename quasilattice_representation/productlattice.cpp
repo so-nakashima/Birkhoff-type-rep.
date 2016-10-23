@@ -20,6 +20,8 @@ using std::map;
 
 productQuasiLattice::productQuasiLattice(quasiLattice* lat, int n, std::function<bool(int,int, int, int)> oracle): power(n), lattice(lat){
 	initializeAllowed(oracle);
+	initializeProjection();
+	initializeMinimum();
 }
 
 void productQuasiLattice::initializeAllowed(std::function<bool(int,int, int, int)> oracle){
@@ -38,4 +40,20 @@ void productQuasiLattice::initializeAllowed(std::function<bool(int,int, int, int
 		}
 		allowed.push_back(bind1);
 	}
+}
+
+void productQuasiLattice::initializeProjection(){
+	for(int i = 0; i != power; i++){
+		vector<int> ithproj;
+		for(int e = 0; e != lattice->size; e++){
+			if(allowed[i][i][e][e])
+				ithproj.push_back(e);
+		}
+		projections.push_back(ithproj);
+	}
+}
+
+void productQuasiLattice::initializeMinimum(){
+	for(int i = 0; i != power; i++)
+		minimum.push_back(lattice->minimum(projections[i]));
 }

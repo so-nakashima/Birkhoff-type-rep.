@@ -14,7 +14,8 @@
 using namespace std;
 
 bool oracle(int i, int j, int a, int b){
-	return true;
+	//return true;
+	return (i != 2 || a == 3) && (j != 2 || b == 3);
 }
 
 int main(){
