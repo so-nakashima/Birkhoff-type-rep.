@@ -7,11 +7,15 @@
 #include<iterator>
 #include<fstream>
 #include "lattice.h"
-//#include "productlattice.h"
+#include "productlattice.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
 using namespace std;
+
+bool oracle(int i, int j, int a, int b){
+	return true;
+}
 
 int main(){
 	
@@ -31,5 +35,8 @@ int main(){
 	}
 	vec[1] = 0;
 	auto hoge = l.joinIrreducibles(vec);
+
+	productQuasiLattice pl(&l,3,oracle);
+
 	return 0;
 }
