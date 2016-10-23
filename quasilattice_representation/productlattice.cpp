@@ -89,3 +89,7 @@ void productQuasiLattice::initializeGroundBases(){
 		groundBases.push_back(ithBase);
 	}
 }
+
+bool productQuasiLattice::compare(int i, int a, int j, int b){
+	return lattice->compare(a,groundBases[j][b][i]);
+}
