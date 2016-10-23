@@ -8,6 +8,7 @@
 #include<fstream>
 #include "lattice.h"
 #include "productlattice.h"
+#include "graph.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
@@ -24,7 +25,18 @@ int main(){
 	std::ifstream file("testlattice1.txt");
 	quasiLattice l(file);
 
-	
+	Edge e1(0,4,0); Edge e2(0,1,0);Edge e3(1,0,0);Edge e4(1,2,0);Edge e5(2,3,0);Edge e6(3,2,0);
+	Graph g;
+	Edges temp;
+	temp.push_back(e1); temp.push_back(e2); g.push_back(temp); temp.clear();
+	temp.push_back(e3); temp.push_back(e4); g.push_back(temp); temp.clear();
+	temp.push_back(e5); g.push_back(temp); temp.clear();
+	temp.push_back(e6); g.push_back(temp); temp.clear();
+	g.push_back(temp);
+
+	vector<vector<int>> res;
+	stronglyConnectedComponents(g,res);
+
 
 	//productDistributiveLattice pl(&l, 3, oracle);
 	//auto hoge = pl.calculateBase(1, "b");
