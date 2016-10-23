@@ -23,16 +23,16 @@ bool oracle(int i, int j, std::set<std::string> s1, std::set<std::string> s2){
 	return (i != 2 || (s1.find("c") != s1.end() && s1.size() == 1)) && (j != 2 || (s2.find("c") != s2.end() && s2.size() == 1));
 }
 
-
 int main(){
 	
 	std::ifstream file("testlattice1.txt");
 	distributiveLattice l(file);
 	std::set<std::string> s,t;
-	s.insert("c");
-	t.insert("d");
+	s.insert("d");
+	s.insert("zomi");
+	t.insert("c");
 
-	//cout << setEquality(s,t) << endl;
+	cout << oracle(2,1,s,t) << endl;
 
 	//productDistributiveLattice pl(&l, 3, oracle);
 	//auto hoge = pl.calculateBase(1, "b");
