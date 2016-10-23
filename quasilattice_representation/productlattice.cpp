@@ -10,7 +10,7 @@
 #include "productlattice.h"
 #include<assert.h>
 
-#define rep(i,n) for(int i = 0; i != n; i++)
+#define rep(i,n) for(int i = 0; i != n; i++) 
 
 using std::string;
 using std::istream;
