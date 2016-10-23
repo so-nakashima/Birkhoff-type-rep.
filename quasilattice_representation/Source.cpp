@@ -25,7 +25,11 @@ int main(){
 	//auto fuga = l.principal_ideal(s);
 	 
 	//bool flag = pl.compare(2, "a", 1, "b");
-
-	cout << l.join(3,4) << endl;
+	vector<int> vec;
+	for(int i = 0; i != 6; i++){
+		vec.push_back(i);
+	}
+	vec[1] = 0;
+	auto hoge = l.joinIrreducibles(vec);
 	return 0;
 }

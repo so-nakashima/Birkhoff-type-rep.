@@ -14,6 +14,7 @@ public:
 	quasiLattice(std::istream&);
 	int compare(int, int);
 	std::vector<int> joinIrreducibles(const std::vector<int>&);
+	int minimum(const std::vector<int>&);
 	virtual ~quasiLattice(){};
 	int size;
 protected:
