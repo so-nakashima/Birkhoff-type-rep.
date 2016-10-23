@@ -8,7 +8,7 @@
 class productDistributiveLattice{
 public:
 	productDistributiveLattice(distributiveLattice*, int, std::function<bool(int,int, std::set<std::string>, std::set<std::string>)>); //oracle can be used for 1 coordinate as A[i][i]......
-	bool compare(int, std::string, int, std::string);
+	bool compare(int,const std::string&, int,const std::string&);
 	bool menbership(std::vector<int>, std::vector<std::set<std::string>>);
 	void graphicRepresentation();
 	std::pair<bool, std::vector<std::set<std::string>>> calculateBase(std::vector<int>, std::vector<std::set<std::string>>);

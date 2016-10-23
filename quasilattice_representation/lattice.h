@@ -9,20 +9,20 @@
 
 class distributiveLattice{
 public:
-	virtual std::set<std::string> join(std::set<std::string>, std::set<std::string>);
-	virtual std::set<std::string> meet(std::set<std::string>, std::set<std::string>);
+	virtual std::set<std::string> join(const std::set<std::string>&, const std::set<std::string>&);
+	virtual std::set<std::string> meet(const std::set<std::string>&, const std::set<std::string>&);
 	distributiveLattice(std::istream&);
-	std::set<std::string> principal_ideal(std::set<std::string>);
-	bool valid(std::set<std::string>);
-	bool compare(std::set<std::string>, std::set<std::string>);
+	std::set<std::string> principal_ideal(const std::set<std::string>&);
+	bool valid(const std::set<std::string>&);
+	bool compare(const std::set<std::string>&, const std::set<std::string>&);
 	virtual ~distributiveLattice(){};
 	std::set<std::string> labels;
 	std::set<std::set<std::string>> elements;
 protected:
 	std::istream& read(std::istream&);
-	std::vector<int> order;
-	//std::set<std::string> bit2stringset(int);
-	int irredusibleNo;
+	std::map<std::string, std::string> order;
+	std::set<std::string> bit2stringset(int);
+	//int irredusibleNo;
 	//std::set<int> join_int(std::set<int>, std::set<int>);
 	//std::set<int> meet_int(std::set<int>, std::set<int>);
 	//std::map<std::string, int> string2int;

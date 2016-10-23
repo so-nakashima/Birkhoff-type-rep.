@@ -98,7 +98,7 @@ std::pair<bool, std::vector<std::set<std::string>>> productDistributiveLattice::
 	return std::make_pair(allowed[i][i][ideal][ideal], groundBases[i][a]);
 }
 
-bool productDistributiveLattice::compare(int i, string s1, int j, string s2){
+bool productDistributiveLattice::compare(int i,const string& s1, int j,const string& s2){
 	auto hoge = calculateBase(j, s2);
 	assert(hoge.first);
 	return hoge.second[i].find(s1)	!= hoge.second[i].end();

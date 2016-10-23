@@ -7,7 +7,7 @@
 #include<iterator>
 #include<fstream>
 #include "lattice.h"
-//#include "productlattice.h"
+#include "productlattice.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
