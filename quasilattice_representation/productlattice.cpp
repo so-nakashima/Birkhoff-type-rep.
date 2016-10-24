@@ -27,6 +27,7 @@ productQuasiLattice::productQuasiLattice(quasiLattice* lat, int n, std::function
 	initializeCoordinate_irreducibles();
 	initializeCoordinate_lowercovers();
 	initializeGroundBases();
+	initializeIndicesConvertors();
 }
 
 void productQuasiLattice::initializeAllowed(std::function<bool(int,int, int, int)> oracle){
@@ -109,12 +110,8 @@ bool productQuasiLattice::compare(int i, int a, int j, int b){ // Only For irred
 	return lattice->compare(a,groundBases[j][b][i]);
 }
 
-void productQuasiLattice::graphicRepresentation(const string& filename){
-	//convert indices to int
-	vector<pair<int,int>> int2indices;
-	vector<map<int,int>> indices2int; //indices2int[i][a] = integer representation of (i,a)
-
-	for(int i = 0; i != power; i++){
+void productQuasiLattice::initializeIndicesConvertors(){
+		for(int i = 0; i != power; i++){
 		map<int,int> ithConvertor;
 		for(int a = 0; a != coordinate_irreducibles[i].size(); a++){
 			int e = coordinate_irreducibles[i][a];
@@ -123,6 +120,9 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 		}
 		indices2int.push_back(ithConvertor);
 	}
+}
+
+Graph productQuasiLattice::computeIrreducibleGraph(){
 	//construction of graph
 	Graph irreducibleGraph; //node i represents int2indices[i]
 	for(int e = 0; e != int2indices.size(); e++){
@@ -144,8 +144,31 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 		}
 		irreducibleGraph.push_back(iaEdges);
 	}
-	//Strongly connected component decomposition
+	return irreducibleGraph;
+}
 
+std::pair<vector<vector<int>>, vector<map<int,int>>> productQuasiLattice::SCCdecomposited(){
+	vector<vector<int>> scc;
+	vector<map<int,int>> indices2scc(power, map<int,int>());
+	stronglyConnectedComponents(computeIrreducibleGraph(), scc);
+	for(int i = 0; i != scc.size(); i++){
+		for(int j = 0; j != scc[i].size(); j++){
+			int k = int2indices[scc[i][j]].first;
+			int a = int2indices[scc[i][j]].second;
+			indices2scc[k][a] = i;
+		}
+	}
+	return std::make_pair(scc, indices2scc);
+}
+
+void productQuasiLattice::graphicRepresentation(const string& filename){
+
+	Graph irreducibleGraph = computeIrreducibleGraph();
+	//Strongly connected component decomposition
+	auto hoge = SCCdecomposited();
+	vector<vector<int>> scc = hoge.first;
+	vector<map<int,int>> indices2scc = hoge.second;
+	vector<map<int,int>> indices2scc2 = hoge.second;
 	//Re-spanning edeges
 
 	//output for graphviz

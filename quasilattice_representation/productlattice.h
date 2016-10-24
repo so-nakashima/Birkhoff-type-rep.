@@ -4,6 +4,7 @@
 #include "lattice.h"
 #include <functional>
 #include <set>
+#include "graph.h"
 
 class productQuasiLattice{
 public:
@@ -20,6 +21,8 @@ public:
 	std::vector<std::vector<int>> coordinate_irreducibles; // coordinate_irreducibles[i] is join-irreducible element in proj_{i}  B
 	std::vector<std::map<int,int>> coordinate_irreducibles2iterator; // coordinate_irreducibles2iterator[i][a] = itr e s.t. cooredinate_irreducibles[i][e] = a 
 	std::vector<std::vector<int>> coordinate_lowercovers; //coordinate_lowercovers[i][e] = the unique lower cover of coordinate_irreducible[i][e]
+	std::vector<std::pair<int,int>> int2indices;
+	std::vector<std::map<int,int>> indices2int;
 protected:
 	quasiLattice* lattice;
 	const int power;
@@ -31,6 +34,9 @@ protected:
 	void initializeCoordinate_irreducibles();
 	void initializeGroundBases();
 	void initializeCoordinate_lowercovers();
+	void initializeIndicesConvertors();
+	Graph computeIrreducibleGraph();
+	std::pair<std::vector<std::vector<int>>, std::vector<std::map<int,int>>> SCCdecomposited();
 private:
 };
 
