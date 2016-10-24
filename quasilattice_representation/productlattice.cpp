@@ -9,6 +9,7 @@
 #include "lattice.h"
 #include "productlattice.h"
 #include<assert.h>
+#include "graph.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++) 
 
@@ -16,6 +17,7 @@ using std::string;
 using std::istream;
 using std::vector;
 using std::set;
+using std::pair;
 using std::map;
 
 productQuasiLattice::productQuasiLattice(quasiLattice* lat, int n, std::function<bool(int,int, int, int)> oracle): power(n), lattice(lat){
@@ -62,8 +64,14 @@ void productQuasiLattice::initializeMinimum(){
 }
 
 void productQuasiLattice::initializeCoordinate_irreducibles(){
-	for(int i = 0; i != power; i++)
+	for(int i = 0; i != power; i++){
 		coordinate_irreducibles.push_back(lattice->joinIrreducibles(projections[i]));
+		map<int,int> ithIrreducibles2itr;
+		for(int j = 0; j != coordinate_irreducibles[i].size(); j++){
+			ithIrreducibles2itr[coordinate_irreducibles[i][j]]=j;
+		}
+		coordinate_irreducibles2iterator.push_back(ithIrreducibles2itr);
+	}
 }
 
 void productQuasiLattice::initializeCoordinate_lowercovers(){
@@ -99,4 +107,29 @@ void productQuasiLattice::initializeGroundBases(){
 
 bool productQuasiLattice::compare(int i, int a, int j, int b){ // Only For irreducible a and b
 	return lattice->compare(a,groundBases[j][b][i]);
+}
+
+void productQuasiLattice::graphicRepresentation(const string& filename){
+	//convert indices to int
+	vector<pair<int,int>> int2indices;
+	vector<map<int,int>> indices2int; //indices2int[i][a] = integer representation of (i,a)
+
+	for(int i = 0; i != power; i++){
+		map<int,int> ithConvertor;
+		for(int a = 0; a != coordinate_irreducibles[i].size(); a++){
+			int e = coordinate_irreducibles[i][a];
+			ithConvertor[e] = int2indices.size();
+			int2indices.push_back(std::make_pair(i,e));
+		}
+		indices2int.push_back(ithConvertor);
+	}
+	//construction of graph
+	Graph irreducibleGraph; //node i represents int2indices[i]
+	for(int e = 0; e != int2indices.size(); e++){
+		int i = int2indices[e].first;
+		int a = int2indices[e].second;
+		//if(coordinate_lowercovers[i][a])
+	}
+
+	//output for 
 }

@@ -12,12 +12,13 @@ public:
 	bool equality(int, int, int, int);
 	//bool menbership(std::vector<int>, std::vector<int>);//partial ver.
 	//bool membership(std::vector<int>);
-	void graphicRepresentation();
+	void graphicRepresentation(const std::string&);
 	//std::vector<int> calculateBase(std::vector<int>, std::vector<int>);
 	//std::vector<int> calculateBase(int, int);
 	std::vector<int> minimum;
 	std::vector<std::vector<int>> projections; // projections[i] is proj_{i} B (here B is subalgebra)
 	std::vector<std::vector<int>> coordinate_irreducibles; // coordinate_irreducibles[i] is join-irreducible element in proj_{i}  B
+	std::vector<std::map<int,int>> coordinate_irreducibles2iterator; // coordinate_irreducibles2iterator[i][a] = itr e s.t. cooredinate_irreducibles[i][e] = a 
 	std::vector<std::vector<int>> coordinate_lowercovers; //coordinate_lowercovers[i][e] = the unique lower cover of coordinate_irreducible[i][e]
 protected:
 	quasiLattice* lattice;

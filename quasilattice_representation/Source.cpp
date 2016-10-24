@@ -24,7 +24,7 @@ int main(){
 	
 	std::ifstream file("testlattice1.txt");
 	quasiLattice l(file);
-
+	/*
 	Edge e1(0,4,0); Edge e2(0,1,0);Edge e3(1,0,0);Edge e4(1,2,0);Edge e5(2,3,0);Edge e6(3,2,0);
 	Graph g;
 	Edges temp;
@@ -36,7 +36,7 @@ int main(){
 
 	vector<vector<int>> res;
 	stronglyConnectedComponents(g,res);
-
+	*/
 
 	//productDistributiveLattice pl(&l, 3, oracle);
 	//auto hoge = pl.calculateBase(1, "b");
@@ -51,6 +51,7 @@ int main(){
 	auto hoge = l.joinIrreducibles(vec);
 
 	productQuasiLattice pl(&l,3,oracle);
+	pl.graphicRepresentation("funi.txt");
 	cout << pl.compare(1, 3, 0, 2);
 	return 0;
 }
