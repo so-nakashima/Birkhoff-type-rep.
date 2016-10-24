@@ -151,26 +151,24 @@ vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& i
 
 modularLattice::modularLattice(istream& in): quasiLattice(in){}
 
+bool modularLattice::pairwiseIncomparable(int a, int b, int c){
+	return !compare(a,b) && !compare(a,c) && !compare(b,a) && !compare(b,c) && !compare(c,a) && !compare(c,b);
+}
+
 std::vector<std::vector<int>> modularLattice::colinearSets(std::vector<int> irreducibles){
 	//list up candidate pair for colinearity
-	vector<vector<vector<int>>> sameJoin(size, vector<vector<int>>(irreducibles.size())); //sameJoin[k][i] = list of the second elements of incomparable pairs s.t. join = k and the first element is irreducibles[i] (the actual second element is irreducibles[samejoin[k][i][itr]])
+	vector<vector<int>> res; 
 	rep(i,irreducibles.size()){
 		int a = irreducibles[i];
 		for(int j = i; j != irreducibles.size(); j++){
 			int b = irreducibles[j];
-			if(!compare(a,b) && !compare(b,a)){
-				sameJoin[join(a,b)][i].push_back(j);
+			for(int k = j; k != irreducibles.size(); k++){
+				int c = irreducibles[k];
+				if(pairwiseIncomparable(a,b,c) && join(a,b) == join(b,c) && join(b,c) == join(c,a)){
+					vector<int> temp; temp.push_back(i);temp.push_back(j);temp.push_back(k);
+					res.push_back(temp);
+				}
 			}
-		}
-	}
-	//construct colinear sets
-	vector<vector<int>> res;
-	rep(i, size){
-		vector<bool> visited(irreducibles.size(), 0);
-		rep(j, sameJoin[i].size()){
-			vector<int> candidateSet;
-			//if(!visited[j])
-
 		}
 	}
 	return res;

@@ -165,7 +165,7 @@ std::pair<vector<vector<int>>, vector<map<int,int>>> productQuasiLattice::SCCdec
 	return std::make_pair(scc, indices2scc);
 }
 
-std::vector<std::set<int>> productQuasiLattice::SCClowercovers(const vector<vector<int>>& scc, vector<map<int,int>> indices2int ,const Graph& irreducibleGraph){
+std::vector<std::set<int>> productQuasiLattice::SCClowercovers(const vector<vector<int>>& scc, vector<map<int,int>>& indices2int ,const Graph& irreducibleGraph){
 	vector<set<int>> res(scc.size());
 	for(int i = 0; i != scc.size(); i++){
 		for(int j = 0; j != scc[i].size(); j++){
@@ -220,4 +220,63 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 
 productModularLattice::productModularLattice(modularLattice* lat,int n, std::function<bool(int,int, int, int)> oracle) : productQuasiLattice(lat, n, oracle){
 	mlattice = lat;
+}
+
+std::set<std::vector<int>> productModularLattice::SCCcollinear(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>> indices2scc){
+	set<vector<int>> res;
+	for(int i = 0; i != power; i++){
+		vector<vector<int>> ithCollinears = mlattice->colinearSets(coordinate_irreducibles[i]);
+		for(int j = 0; j != ithCollinears.size(); j++){
+			int itr1,itr2,itr3; itr1 = ithCollinears[j][0]; itr2 = ithCollinears[j][1]; itr3 = ithCollinears[j][2];
+			int scc1,scc2,scc3; 
+			scc1 = indices2scc[i][coordinate_irreducibles[i][itr1]];
+			scc2 = indices2scc[i][coordinate_irreducibles[i][itr2]];
+			scc3 = indices2scc[i][coordinate_irreducibles[i][itr3]];
+			vector<int> temp; temp.push_back(scc1); temp.push_back(scc2); temp.push_back(scc3);
+			std::sort(temp.begin(), temp.end());
+			res.insert(temp);
+		}
+	}
+	return res;
+}
+
+void productModularLattice::output2graphviz(std::string filename, const std::vector<std::set<int>>& sccLowercover, const std::set<std::vector<int>> sccCollinears){
+	std::ofstream outfile(filename + ".txt");
+	outfile << "digraph dolicas {" << endl;
+	outfile << "  node[label = \"\", shape = circle]" << endl;
+	rep(i, sccLowercover.size()){
+		outfile << "  " << i << ";" << endl;
+	}
+	rep(i, sccLowercover.size()){
+		/*if(sccLowercover[i] != -1)
+			outfile << "  " << i << " -> " << sccLowercover[i] << ";" << endl;*/
+		for(auto itr = sccLowercover[i].begin(); itr != sccLowercover[i].end(); itr++){
+			outfile << "  " << i << " -> " << *itr << ";" << endl;
+		}
+	}
+	// new edge output for modular lattice
+	for(auto itr = sccCollinears.begin(); itr != sccCollinears.end(); itr++){
+		outfile << "  " << (*itr)[0] << " -> " << (*itr)[1] << " -> " << (*itr)[2] << " [dir = none, style = \"dotted\"];" << endl;
+	}
+
+
+	outfile << "}" << endl; 
+	
+	string command = "dot -T png " + filename +".txt -o " + filename + ".png";
+	system(command.c_str());
+}
+
+void productModularLattice::graphicRepresentation(const string& filename){
+	//Strongly connected component decomposition
+	Graph irreducibleGraph = computeIrreducibleGraph();
+	auto hoge = SCCdecomposited(irreducibleGraph);
+	vector<vector<int>> scc = hoge.first;
+	vector<map<int,int>> indices2scc = hoge.second;
+	//Re-spanning edeges
+	vector<set<int>> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
+	//colinear relationship for scc
+	set<vector<int>> sccCollinear = SCCcollinear(scc, indices2scc);
+	int a = 0;
+	//output for graphviz
+	output2graphviz(filename, sccLowercover, sccCollinear);
 }

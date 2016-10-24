@@ -44,10 +44,11 @@ protected:
 class modularLattice: public quasiLattice{
 public:
 	modularLattice(std::istream&);
-	std::vector<std::vector<int>> colinearSets(std::vector<int> irreducibles); //colinearSets[i] = ith sets of elements which are 3-tuple-wise collinear; elements are represented by iterator in irreducible
+	std::vector<std::vector<int>> colinearSets(std::vector<int> irreducibles); //colinearSets[i] = ith sets of elements which are 3-tuple-wise collinear; elements are represented by iterator in irreducible // restricted to 3 elements...
 	//bool is_colinear(std::set<std::string>, std::set<std::string>);
 	//std::vector<std::set<std::string>> colinears;
-protected:
+//protected:
+	bool pairwiseIncomparable(int a, int b, int c);
 	//bool valid(std::set<std::string>);
 };
 #endif
