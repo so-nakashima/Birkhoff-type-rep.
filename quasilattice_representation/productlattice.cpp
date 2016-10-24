@@ -137,8 +137,16 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 		for(int k = 0; k != power; k++){
 			if(k == i)
 				continue;
+			vector<int> kthLowerCover = lattice->joinRepresentation(groundBases[i][a][k], coordinate_irreducibles[k]);
+			for(int j = 0; j != kthLowerCover.size(); j++){
+				iaEdges.push_back(Edge(e,indices2int[k][kthLowerCover[j]],0));
+			}
 		}
+		irreducibleGraph.push_back(iaEdges);
 	}
+	//Strongly connected component decomposition
 
-	//output for 
+	//Re-spanning edeges
+
+	//output for graphviz
 }
