@@ -18,7 +18,8 @@ bool oracle(int i, int j, int a, int b){
 	//return true;
 	//return (i != 2 || a == 3) && (j != 2 || b == 3);
 	//return (i != 2 || a == 3) && (j != 2 || b == 3) && (i != 1 || a != 1) && (j != 1 || b != 1);
-	return a == b;
+	//return a == b;
+	return (i != 1 || a != 1) && (j != 1 || b != 1);
 }
 
 int main(){

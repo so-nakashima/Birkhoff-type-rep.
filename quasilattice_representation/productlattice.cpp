@@ -147,10 +147,10 @@ Graph productQuasiLattice::computeIrreducibleGraph(){
 	return irreducibleGraph;
 }
 
-std::pair<vector<vector<int>>, vector<map<int,int>>> productQuasiLattice::SCCdecomposited(){
+std::pair<vector<vector<int>>, vector<map<int,int>>> productQuasiLattice::SCCdecomposited(const Graph& irreducibleGraph){
 	vector<vector<int>> scc;
 	vector<map<int,int>> indices2scc(power, map<int,int>());
-	stronglyConnectedComponents(computeIrreducibleGraph(), scc);
+	stronglyConnectedComponents(irreducibleGraph, scc);
 	for(int i = 0; i != scc.size(); i++){
 		for(int j = 0; j != scc[i].size(); j++){
 			int k = int2indices[scc[i][j]].first;
@@ -161,15 +161,37 @@ std::pair<vector<vector<int>>, vector<map<int,int>>> productQuasiLattice::SCCdec
 	return std::make_pair(scc, indices2scc);
 }
 
-void productQuasiLattice::graphicRepresentation(const string& filename){
+std::vector<int> productQuasiLattice::SCClowercovers(const vector<vector<int>>& scc, vector<map<int,int>> indices2int ,const Graph& irreducibleGraph){
+	vector<int> res(scc.size(), -1);
+	for(int i = 0; i != scc.size(); i++){
+		for(int j = 0; j != scc[i].size(); j++){
+			int node = scc[i][j];
+			Edges edges = irreducibleGraph[node];
+			for(int k = 0; k != edges.size(); k++){
+				int dst = edges[k].dst;
+				int coord = int2indices[dst].first;
+				int elem = int2indices[dst].second;
+				int dstComp =  indices2int[coord][elem];
+				if(dstComp != i){
+					res[i] = dstComp;
+					break;
+				}
+			}
+			if(res[i] != -1)
+				break;
+		}		
+	}
+	return res;
+}
 
-	Graph irreducibleGraph = computeIrreducibleGraph();
+void productQuasiLattice::graphicRepresentation(const string& filename){
 	//Strongly connected component decomposition
-	auto hoge = SCCdecomposited();
+	Graph irreducibleGraph = computeIrreducibleGraph();
+	auto hoge = SCCdecomposited(irreducibleGraph);
 	vector<vector<int>> scc = hoge.first;
 	vector<map<int,int>> indices2scc = hoge.second;
-	vector<map<int,int>> indices2scc2 = hoge.second;
 	//Re-spanning edeges
-
+	vector<int> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
+	int a = 0;
 	//output for graphviz
 }
