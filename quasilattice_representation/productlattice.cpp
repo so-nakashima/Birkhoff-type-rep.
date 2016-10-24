@@ -131,14 +131,17 @@ Graph productQuasiLattice::computeIrreducibleGraph(){
 		int a = int2indices[e].second;
 		int itr_a = coordinate_irreducibles2iterator[i][a];
 		Edges iaEdges;
+		/*
 		int lower = coordinate_lowercovers[i][itr_a];
 		if(lower != -1){
 			iaEdges.push_back(Edge(e, indices2int[i][lower], 0));
-		}
+		}*/
 		for(int k = 0; k != power; k++){
-			if(k == i)
-				continue;
-			vector<int> kthLowerCover = lattice->joinRepresentation(groundBases[i][a][k], coordinate_irreducibles[k]);
+			vector<int> kthLowerCover;
+			if(k != i)
+				kthLowerCover = lattice->joinRepresentation(groundBases[i][a][k], coordinate_irreducibles[k]);
+			else
+				kthLowerCover = lattice->joinRepresentation(coordinate_lowercovers[i][itr_a], coordinate_irreducibles[i]);
 			for(int j = 0; j != kthLowerCover.size(); j++){
 				iaEdges.push_back(Edge(e,indices2int[k][kthLowerCover[j]],0));
 			}
@@ -162,8 +165,8 @@ std::pair<vector<vector<int>>, vector<map<int,int>>> productQuasiLattice::SCCdec
 	return std::make_pair(scc, indices2scc);
 }
 
-std::vector<int> productQuasiLattice::SCClowercovers(const vector<vector<int>>& scc, vector<map<int,int>> indices2int ,const Graph& irreducibleGraph){
-	vector<int> res(scc.size(), -1);
+std::vector<std::set<int>> productQuasiLattice::SCClowercovers(const vector<vector<int>>& scc, vector<map<int,int>> indices2int ,const Graph& irreducibleGraph){
+	vector<set<int>> res(scc.size());
 	for(int i = 0; i != scc.size(); i++){
 		for(int j = 0; j != scc[i].size(); j++){
 			int node = scc[i][j];
@@ -174,18 +177,15 @@ std::vector<int> productQuasiLattice::SCClowercovers(const vector<vector<int>>& 
 				int elem = int2indices[dst].second;
 				int dstComp =  indices2int[coord][elem];
 				if(dstComp != i){
-					res[i] = dstComp;
-					break;
+					res[i].insert(dstComp);
 				}
 			}
-			if(res[i] != -1)
-				break;
 		}		
 	}
 	return res;
 }
 
-void productQuasiLattice::output2graphviz(string filename, const vector<int>& sccLowercover){
+void productQuasiLattice::output2graphviz(string filename, const vector<set<int>>& sccLowercover){
 	std::ofstream outfile(filename + ".txt");
 	outfile << "digraph dolicas {" << endl;
 	outfile << "  node[label = \"\", shape = circle]" << endl;
@@ -193,8 +193,11 @@ void productQuasiLattice::output2graphviz(string filename, const vector<int>& sc
 		outfile << "  " << i << ";" << endl;
 	}
 	rep(i, sccLowercover.size()){
-		if(sccLowercover[i] != -1)
-			outfile << "  " << i << " -> " << sccLowercover[i] << ";" << endl;
+		/*if(sccLowercover[i] != -1)
+			outfile << "  " << i << " -> " << sccLowercover[i] << ";" << endl;*/
+		for(auto itr = sccLowercover[i].begin(); itr != sccLowercover[i].end(); itr++){
+			outfile << "  " << i << " -> " << *itr << ";" << endl;
+		}
 	}
 	outfile << "}" << endl; 
 	
@@ -209,8 +212,12 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 	vector<vector<int>> scc = hoge.first;
 	vector<map<int,int>> indices2scc = hoge.second;
 	//Re-spanning edeges
-	vector<int> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
+	vector<set<int>> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
 	//output for graphviz
 	output2graphviz(filename, sccLowercover);
 	
+}
+
+productModularLattice::productModularLattice(modularLattice* lat,int n, std::function<bool(int,int, int, int)> oracle) : productQuasiLattice(lat, n, oracle){
+	mlattice = lat;
 }

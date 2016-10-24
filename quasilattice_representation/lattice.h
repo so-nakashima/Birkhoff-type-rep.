@@ -19,7 +19,7 @@ public:
 	virtual ~quasiLattice(){};
 	int size;
 	std::vector<int> joinRepresentation(int elem, const std::vector<int>& irreducibles);
-	std::vector<int> lowerCover(const std::vector<int>&); // Only for irreducible set; details are explained in productQuasiLattice::coordinate_lowercovers
+	std::vector<int> lowerCover(const std::vector<int>&); // Only for irreducible set; details are explained in productQuasiLattice::coordinate_lowercovers 
 protected:
 	std::istream& read(std::istream&);
 	std::vector<std::vector<int>> joinTable;
@@ -44,7 +44,7 @@ protected:
 class modularLattice: public quasiLattice{
 public:
 	modularLattice(std::istream&);
-	std::istream& read(std::istream&);
+	std::vector<std::vector<int>> colinearSets(std::vector<int> irreducibles); //colinearSets[i] = ith sets of elements which are 3-tuple-wise collinear; elements are represented by iterator in irreducible
 	//bool is_colinear(std::set<std::string>, std::set<std::string>);
 	//std::vector<std::set<std::string>> colinears;
 protected:

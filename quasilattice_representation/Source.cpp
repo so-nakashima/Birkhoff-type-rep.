@@ -14,7 +14,7 @@
 
 using namespace std;
 
-string outfile = "graphviz\\tube";
+string outfile = "graphviz\\zomi";
 string infile = "lattice\\modular1.txt";
 
 bool oracle(int i, int j, int a, int b){
@@ -28,7 +28,7 @@ bool oracle(int i, int j, int a, int b){
 int main(){
 	
 	std::ifstream file(infile.c_str());
-	modularLattice l(file);
+	quasiLattice l(file);
 	/*
 	Edge e1(0,4,0); Edge e2(0,1,0);Edge e3(1,0,0);Edge e4(1,2,0);Edge e5(2,3,0);Edge e6(3,2,0);
 	Graph g;
@@ -52,8 +52,8 @@ int main(){
 	for(int i = 1; i != 6; i++){
 		vec.push_back(i);
 	}*/
-	vec.push_back(2);vec.push_back(3);
-	auto hoge = l.joinRepresentation(3, vec);;
+	vec.push_back(1);vec.push_back(2);vec.push_back(3);vec.push_back(5);
+	//l.colinearSets(vec);
 
 	productQuasiLattice pl(&l,3,oracle);
 	pl.graphicRepresentation(outfile);

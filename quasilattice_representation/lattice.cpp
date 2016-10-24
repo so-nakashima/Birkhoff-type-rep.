@@ -9,6 +9,7 @@
 #include<assert.h>
 #include<queue>
 
+#define rep(i,n) for(int i = 0; i != n; i++) 
 
 using std::string;
 using std::istream;
@@ -123,11 +124,21 @@ vector<int> quasiLattice::lowerCover(const vector<int>& irreducibles){
 vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& irreducibles){
 	vector<int> lowers;
 	set<int> taboo;
-	vector<int> covers = lowerCover(irreducibles);
+	//vector<int> covers = lowerCover(irreducibles);
+	if(elem == -1)
+		return vector<int>();
 	for(int i = 0; i != irreducibles.size(); i++){
 		if(compare(irreducibles[i], elem)){
 			lowers.push_back(irreducibles[i]);
-			taboo.insert(covers[i]);
+			//taboo.insert(covers[i]);
+		}
+	}
+	rep(i,lowers.size()){
+		rep(j, lowers.size()){
+			if(lowers[i] == lowers[j])
+				continue;
+			if(compare(lowers[j],lowers[i]))
+				taboo.insert(lowers[j]);
 		}
 	}
 	vector<int> res;
@@ -138,6 +149,29 @@ vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& i
 	return res;
 }
 
-modularLattice::modularLattice(istream& in): quasiLattice(in){
-	
+modularLattice::modularLattice(istream& in): quasiLattice(in){}
+
+std::vector<std::vector<int>> modularLattice::colinearSets(std::vector<int> irreducibles){
+	//list up candidate pair for colinearity
+	vector<vector<vector<int>>> sameJoin(size, vector<vector<int>>(irreducibles.size())); //sameJoin[k][i] = list of the second elements of incomparable pairs s.t. join = k and the first element is irreducibles[i] (the actual second element is irreducibles[samejoin[k][i][itr]])
+	rep(i,irreducibles.size()){
+		int a = irreducibles[i];
+		for(int j = i; j != irreducibles.size(); j++){
+			int b = irreducibles[j];
+			if(!compare(a,b) && !compare(b,a)){
+				sameJoin[join(a,b)][i].push_back(j);
+			}
+		}
+	}
+	//construct colinear sets
+	vector<vector<int>> res;
+	rep(i, size){
+		vector<bool> visited(irreducibles.size(), 0);
+		rep(j, sameJoin[i].size()){
+			vector<int> candidateSet;
+			//if(!visited[j])
+
+		}
+	}
+	return res;
 }

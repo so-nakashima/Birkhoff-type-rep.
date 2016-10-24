@@ -37,8 +37,8 @@ protected:
 	void initializeIndicesConvertors();
 	Graph computeIrreducibleGraph();
 	std::pair<std::vector<std::vector<int>>, std::vector<std::map<int,int>>> SCCdecomposited(const Graph&);
-	std::vector<int> SCClowercovers(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>>, const Graph&);
-	void output2graphviz(std::string, const std::vector<int>&);
+	std::vector<std::set<int>> SCClowercovers(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>>, const Graph&);
+	void output2graphviz(std::string, const std::vector<std::set<int>>&);
 private:
 };
 
@@ -53,8 +53,10 @@ private:
 
 class productModularLattice : public productQuasiLattice{
 public:
+	productModularLattice(modularLattice*,int, std::function<bool(int,int, int, int)>);
 	void graphicRepresentation();
 protected:
+	modularLattice* mlattice;
 private:
 };
 
