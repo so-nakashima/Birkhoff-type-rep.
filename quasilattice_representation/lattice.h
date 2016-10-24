@@ -39,9 +39,9 @@ protected:
 	std::istream& read(std::istream&);
 	bool valid(std::set<std::string>);
 	//bool consistent_int(std::set<int>, std::set<int>);
-};
-
-class modularLattice: public lattice{
+};*/
+/*
+class modularLattice: public quasiLattice{
 public:
 	modularLattice(std::istream&);
 	std::istream& read(std::istream&);
@@ -49,6 +49,6 @@ public:
 	std::vector<std::set<std::string>> colinears;
 protected:
 	bool valid(std::set<std::string>);
-};
-*/
+};*/
+
 #endif

@@ -19,6 +19,7 @@ using std::vector;
 using std::set;
 using std::pair;
 using std::map;
+using std::endl;
 
 productQuasiLattice::productQuasiLattice(quasiLattice* lat, int n, std::function<bool(int,int, int, int)> oracle): power(n), lattice(lat){
 	initializeAllowed(oracle);
@@ -184,6 +185,23 @@ std::vector<int> productQuasiLattice::SCClowercovers(const vector<vector<int>>& 
 	return res;
 }
 
+void productQuasiLattice::output2graphviz(string filename, const vector<int>& sccLowercover){
+	std::ofstream outfile(filename + ".txt");
+	outfile << "digraph dolicas {" << endl;
+	outfile << "  node[label = \"\", shape = circle]" << endl;
+	rep(i, sccLowercover.size()){
+		outfile << "  " << i << ";" << endl;
+	}
+	rep(i, sccLowercover.size()){
+		if(sccLowercover[i] != -1)
+			outfile << "  " << i << " -> " << sccLowercover[i] << ";" << endl;
+	}
+	outfile << "}" << endl; 
+	
+	string command = "dot -T png " + filename +".txt -o " + filename + ".png";
+	system(command.c_str());
+}
+
 void productQuasiLattice::graphicRepresentation(const string& filename){
 	//Strongly connected component decomposition
 	Graph irreducibleGraph = computeIrreducibleGraph();
@@ -192,6 +210,7 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 	vector<map<int,int>> indices2scc = hoge.second;
 	//Re-spanning edeges
 	vector<int> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
-	int a = 0;
 	//output for graphviz
+	output2graphviz(filename, sccLowercover);
+	
 }

@@ -14,12 +14,14 @@
 
 using namespace std;
 
+string filename = "graphviz\\tube";
+
 bool oracle(int i, int j, int a, int b){
 	//return true;
 	//return (i != 2 || a == 3) && (j != 2 || b == 3);
 	//return (i != 2 || a == 3) && (j != 2 || b == 3) && (i != 1 || a != 1) && (j != 1 || b != 1);
-	//return a == b;
-	return (i != 1 || a != 1) && (j != 1 || b != 1);
+	return a == b;
+	//return (i != 1 || a != 1) && (j != 1 || b != 1);
 }
 
 int main(){
@@ -53,7 +55,6 @@ int main(){
 	auto hoge = l.joinRepresentation(3, vec);;
 
 	productQuasiLattice pl(&l,3,oracle);
-	pl.graphicRepresentation("funi.txt");
-	cout << pl.compare(1, 3, 0, 2);
+	pl.graphicRepresentation(filename);
 	return 0;
 }

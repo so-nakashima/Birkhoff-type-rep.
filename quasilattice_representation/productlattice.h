@@ -38,6 +38,7 @@ protected:
 	Graph computeIrreducibleGraph();
 	std::pair<std::vector<std::vector<int>>, std::vector<std::map<int,int>>> SCCdecomposited(const Graph&);
 	std::vector<int> SCClowercovers(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>>, const Graph&);
+	void output2graphviz(std::string, const std::vector<int>&);
 private:
 };
 
