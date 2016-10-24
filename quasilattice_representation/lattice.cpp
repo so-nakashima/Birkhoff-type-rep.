@@ -109,13 +109,31 @@ vector<int> quasiLattice::lowerCover(const vector<int>& irreducibles){
 	for(int i = 0; i != irreducibles.size(); i++){
 		vector<int> lowerset;
 		for(int j = 0; j != irreducibles.size(); j++){
-			if(j != i && compare(irreducibles[j],irreducibles[i]))
+			if(irreducibles[j] != irreducibles[i] && compare(irreducibles[j],irreducibles[i]))
 				lowerset.push_back(irreducibles[j]);
 		}
 		if(lowerset.size() > 0)
 			res.push_back(maximum(lowerset));
 		else
 			res.push_back(-1);
+	}
+	return res;
+}
+
+vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& irreducibles){
+	vector<int> lowers;
+	set<int> taboo;
+	vector<int> covers = lowerCover(irreducibles);
+	for(int i = 0; i != irreducibles.size(); i++){
+		if(compare(irreducibles[i], elem)){
+			lowers.push_back(irreducibles[i]);
+			taboo.insert(covers[i]);
+		}
+	}
+	vector<int> res;
+	for(int i = 0; i != lowers.size(); i++){
+		if(taboo.find(lowers[i]) == taboo.end())
+			res.push_back(lowers[i]);
 	}
 	return res;
 }

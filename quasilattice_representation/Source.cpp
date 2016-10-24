@@ -43,12 +43,12 @@ int main(){
 	//auto fuga = l.principal_ideal(s);
 	 
 	//bool flag = pl.compare(2, "a", 1, "b");
-	vector<int> vec;
-	for(int i = 0; i != 6; i++){
+	vector<int> vec;/*
+	for(int i = 1; i != 6; i++){
 		vec.push_back(i);
-	}
-	vec[1] = 0;
-	auto hoge = l.joinIrreducibles(vec);
+	}*/
+	vec.push_back(2);vec.push_back(3);
+	auto hoge = l.joinRepresentation(3, vec);;
 
 	productQuasiLattice pl(&l,3,oracle);
 	pl.graphicRepresentation("funi.txt");

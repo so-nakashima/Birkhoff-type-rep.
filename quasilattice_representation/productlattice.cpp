@@ -128,7 +128,16 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 	for(int e = 0; e != int2indices.size(); e++){
 		int i = int2indices[e].first;
 		int a = int2indices[e].second;
-		//if(coordinate_lowercovers[i][a])
+		int itr_a = coordinate_irreducibles2iterator[i][a];
+		Edges iaEdges;
+		int lower = coordinate_lowercovers[i][itr_a];
+		if(lower != -1){
+			iaEdges.push_back(Edge(e, indices2int[i][lower], 0));
+		}
+		for(int k = 0; k != power; k++){
+			if(k == i)
+				continue;
+		}
 	}
 
 	//output for 
