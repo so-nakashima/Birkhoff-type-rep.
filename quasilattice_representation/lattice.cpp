@@ -137,3 +137,7 @@ vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& i
 	}
 	return res;
 }
+
+modularLattice::modularLattice(istream& in): quasiLattice(in){
+	
+}

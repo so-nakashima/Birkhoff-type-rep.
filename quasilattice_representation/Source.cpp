@@ -14,7 +14,8 @@
 
 using namespace std;
 
-string filename = "graphviz\\tube";
+string outfile = "graphviz\\tube";
+string infile = "lattice\\modular1.txt";
 
 bool oracle(int i, int j, int a, int b){
 	//return true;
@@ -26,8 +27,8 @@ bool oracle(int i, int j, int a, int b){
 
 int main(){
 	
-	std::ifstream file("testlattice1.txt");
-	quasiLattice l(file);
+	std::ifstream file(infile.c_str());
+	modularLattice l(file);
 	/*
 	Edge e1(0,4,0); Edge e2(0,1,0);Edge e3(1,0,0);Edge e4(1,2,0);Edge e5(2,3,0);Edge e6(3,2,0);
 	Graph g;
@@ -55,6 +56,6 @@ int main(){
 	auto hoge = l.joinRepresentation(3, vec);;
 
 	productQuasiLattice pl(&l,3,oracle);
-	pl.graphicRepresentation(filename);
+	pl.graphicRepresentation(outfile);
 	return 0;
 }

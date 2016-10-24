@@ -40,15 +40,14 @@ protected:
 	bool valid(std::set<std::string>);
 	//bool consistent_int(std::set<int>, std::set<int>);
 };*/
-/*
+
 class modularLattice: public quasiLattice{
 public:
 	modularLattice(std::istream&);
 	std::istream& read(std::istream&);
-	bool is_colinear(std::set<std::string>, std::set<std::string>);
-	std::vector<std::set<std::string>> colinears;
+	//bool is_colinear(std::set<std::string>, std::set<std::string>);
+	//std::vector<std::set<std::string>> colinears;
 protected:
-	bool valid(std::set<std::string>);
-};*/
-
+	//bool valid(std::set<std::string>);
+};
 #endif
