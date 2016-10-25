@@ -14,7 +14,7 @@
 
 using namespace std;
 
-string outfile = "graphviz\\reiSOME";
+string outfile = "graphviz\\colorreiSOME";
 string infile = "lattice\\modular3.txt";
 //string infile = "lattice\\distributive1.txt";
 
@@ -60,6 +60,6 @@ int main(){
 
 	//productQuasiLattice pl(&l,3,oracle);
 	productModularLattice pl(&l, 3, oracle);
-	pl.graphicRepresentation(outfile);
+	pl.graphicRepresentation(outfile, true);
 	return 0;
 }

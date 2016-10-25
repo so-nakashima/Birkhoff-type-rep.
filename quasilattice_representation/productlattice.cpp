@@ -240,7 +240,18 @@ std::set<std::vector<int>> productModularLattice::SCCcollinear(const std::vector
 	return res;
 }
 
-void productModularLattice::output2graphviz(std::string filename, const std::vector<std::set<int>>& sccLowercover, const std::set<std::vector<int>> sccCollinears){
+string int2string(int n, bool flag){
+	string hoge[100] = {"blue", "deepskyblue", "seagreen", "indigo", "maroon", "gold", "red", "lightsteelblue", "deeppink", "lawngreen", "sienna", "grey", "blueviolet"};
+	int colorNo = 13;
+	if(!flag)
+		return "";
+	else
+		return hoge[n%colorNo];
+
+}
+
+void productModularLattice::output2graphviz(std::string filename, const std::vector<std::set<int>>& sccLowercover, const std::set<std::vector<int>> sccCollinears, bool colormode){
+
 	std::ofstream outfile(filename + ".txt");
 	outfile << "digraph dolicas {" << endl;
 	outfile << "  node[label = \"\", shape = circle]" << endl;
@@ -255,8 +266,10 @@ void productModularLattice::output2graphviz(std::string filename, const std::vec
 		}
 	}
 	// new edge output for modular lattice
+	int counter = 0;
 	for(auto itr = sccCollinears.begin(); itr != sccCollinears.end(); itr++){
-		outfile << "  " << (*itr)[0] << " -> " << (*itr)[1] << " -> " << (*itr)[2] << " [dir = none, style = \"dotted\"];" << endl;
+		outfile << "  " << (*itr)[0] << " -> " << (*itr)[1] << " -> " << (*itr)[2] << " [dir = none, style = \"dashed\", color = " << int2string(counter, colormode) << "];" << endl;
+		counter++;
 	}
 
 
@@ -266,7 +279,7 @@ void productModularLattice::output2graphviz(std::string filename, const std::vec
 	system(command.c_str());
 }
 
-void productModularLattice::graphicRepresentation(const string& filename){
+void productModularLattice::graphicRepresentation(const string& filename, bool colormode){
 	//Strongly connected component decomposition
 	Graph irreducibleGraph = computeIrreducibleGraph();
 	auto hoge = SCCdecomposited(irreducibleGraph);
@@ -278,5 +291,5 @@ void productModularLattice::graphicRepresentation(const string& filename){
 	set<vector<int>> sccCollinear = SCCcollinear(scc, indices2scc);
 	int a = 0;
 	//output for graphviz
-	output2graphviz(filename, sccLowercover, sccCollinear);
+	output2graphviz(filename, sccLowercover, sccCollinear, colormode);
 }

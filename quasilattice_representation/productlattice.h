@@ -54,11 +54,11 @@ private:
 class productModularLattice : public productQuasiLattice{
 public:
 	productModularLattice(modularLattice*,int, std::function<bool(int,int, int, int)>);
-	void graphicRepresentation(const std::string& filename);
+	void graphicRepresentation(const std::string& filename, bool colormode);
 protected:
 	modularLattice* mlattice;
 	std::set<std::vector<int>> SCCcollinear(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>> indices2scc);
-	void output2graphviz(std::string filename, const std::vector<std::set<int>>& sccLowercovers, const std::set<std::vector<int>> sccCollinears);
+	void output2graphviz(std::string filename, const std::vector<std::set<int>>& sccLowercovers, const std::set<std::vector<int>> sccCollinears, bool colormode);
 private:
 };
 
