@@ -37,8 +37,10 @@ protected:
 	void initializeIndicesConvertors();
 	Graph computeIrreducibleGraph();
 	std::pair<std::vector<std::vector<int>>, std::vector<std::map<int,int>>> SCCdecomposited(const Graph&);
-	std::vector<std::set<int>> SCClowercovers(const std::vector<std::vector<int>>& scc,  std::vector<std::map<int,int>>&, const Graph&);
+	std::vector<std::set<int>> SCClowercovers(const std::vector<std::vector<int>>& scc,  std::vector<std::map<int,int>>&, const Graph&);//SCClowercovers[i].find(j) means edge i -> j exists (here i,j reffer to scc no.)
+	void reduceLowercovers(std::vector<std::set<int>>& lowcovers);
 	void output2graphviz(std::string, const std::vector<std::set<int>>&);
+
 private:
 };
 

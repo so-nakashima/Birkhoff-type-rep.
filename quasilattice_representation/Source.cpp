@@ -14,23 +14,25 @@
 
 using namespace std;
 
-string outfile = "graphviz\\colorreiSOME";
-string infile = "lattice\\modular3.txt";
+string outfile = "graphviz\\end_object7";
+string infile = "lattice\\modular4.txt";
 //string infile = "lattice\\distributive1.txt";
 
+std::ifstream file(infile.c_str());
+//quasiLattice l(file);
+modularLattice l(file);
+
+
 bool oracle(int i, int j, int a, int b){
-	return true;
+	//return true;
 	//return (i != 2 || a == 3) && (j != 2 || b == 3);
 	//return (i != 2 || a == 3) && (j != 2 || b == 3) && (i != 1 || a != 1) && (j != 1 || b != 1);
 	//return a == b;
 	//return (i != 1 || a != 1) && (j != 1 || b != 1);
+	return (i % 2 != j % 2) || (i == j) || (i < j && l.compare(a,b)) || (i > j && l.compare(b,a));
 }
 
 int main(){
-	
-	std::ifstream file(infile.c_str());
-	//quasiLattice l(file);
-	modularLattice l(file);
 	
 	/*
 	Edge e1(0,4,0); Edge e2(0,1,0);Edge e3(1,0,0);Edge e4(1,2,0);Edge e5(2,3,0);Edge e6(3,2,0);
@@ -59,7 +61,7 @@ int main(){
 	//auto hoge = l.colinearSets(vec);
 
 	//productQuasiLattice pl(&l,3,oracle);
-	productModularLattice pl(&l, 3, oracle);
+	productModularLattice pl(&l, 5, oracle);
 	pl.graphicRepresentation(outfile, true);
 	return 0;
 }

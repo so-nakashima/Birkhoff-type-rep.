@@ -18,7 +18,7 @@ public:
 	int maximum(const std::vector<int>&);// may NOT be maximum if inconsistent pairs included!!
 	virtual ~quasiLattice(){};
 	int size;
-	std::vector<int> joinRepresentation(int elem, const std::vector<int>& irreducibles);
+	std::vector<int> joinRepresentation(int elem, const std::vector<int>& irreducibles);//Now Reduntant expression
 	std::vector<int> lowerCover(const std::vector<int>&); // Only for irreducible set; details are explained in productQuasiLattice::coordinate_lowercovers 
 protected:
 	std::istream& read(std::istream&);

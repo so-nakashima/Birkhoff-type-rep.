@@ -141,7 +141,7 @@ Graph productQuasiLattice::computeIrreducibleGraph(){
 			if(k != i)
 				kthLowerCover = lattice->joinRepresentation(groundBases[i][a][k], coordinate_irreducibles[k]);
 			else
-				kthLowerCover = lattice->joinRepresentation(coordinate_lowercovers[i][itr_a], coordinate_irreducibles[i]);
+				kthLowerCover = lattice->joinRepresentation(coordinate_lowercovers[i][itr_a], coordinate_irreducibles[i]);//This if statement may not be necessary; i -> i will be removed in scc decomposition and scc lowercover
 			for(int j = 0; j != kthLowerCover.size(); j++){
 				iaEdges.push_back(Edge(e,indices2int[k][kthLowerCover[j]],0));
 			}
@@ -185,6 +185,33 @@ std::vector<std::set<int>> productQuasiLattice::SCClowercovers(const vector<vect
 	return res;
 }
 
+void productQuasiLattice::reduceLowercovers(std::vector<std::set<int>>& lowcovers){
+	//calculate should be removed elements
+	vector<set<int>> willRemove;
+	for(int i = 0; i != lowcovers.size(); i++){
+		set<int> ithWillRemove;
+		//pick i -> j, i -> k; if j -> k exists, reduce i -> k
+		for(auto itr1 = lowcovers[i].begin(); itr1 != lowcovers[i].end(); itr1++){
+			for(auto itr2 = lowcovers[i].begin(); itr2 != lowcovers[i].end(); itr2++){
+				int j = *itr1;
+				int k = *itr2;
+				if(j == k)
+					continue;
+				if(lowcovers[j].find(k) != lowcovers[j].end())
+					ithWillRemove.insert(k);
+
+			}
+		}
+		willRemove.push_back(ithWillRemove);
+	}
+	//Removing
+	for(int i = 0; i != lowcovers.size(); i++){
+		for(auto itr = willRemove[i].begin(); itr != willRemove[i].end(); itr++){
+			lowcovers[i].erase(*itr);
+		}
+	}
+}
+
 void productQuasiLattice::output2graphviz(string filename, const vector<set<int>>& sccLowercover){
 	std::ofstream outfile(filename + ".txt");
 	outfile << "digraph dolicas {" << endl;
@@ -213,6 +240,8 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 	vector<map<int,int>> indices2scc = hoge.second;
 	//Re-spanning edeges
 	vector<set<int>> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
+	//reduce reduntant edges
+	reduceLowercovers(sccLowercover);
 	//output for graphviz
 	output2graphviz(filename, sccLowercover);
 	
@@ -241,8 +270,8 @@ std::set<std::vector<int>> productModularLattice::SCCcollinear(const std::vector
 }
 
 string int2string(int n, bool flag){
-	string hoge[100] = {"blue", "deepskyblue", "seagreen", "indigo", "maroon", "gold", "red", "lightsteelblue", "deeppink", "lawngreen", "sienna", "grey", "blueviolet"};
-	int colorNo = 13;
+	string hoge[100] = {"deepskyblue", "seagreen", "indigo", "maroon", "black", "gold", "red", "lightsteelblue", "deeppink", "lawngreen", "grey"};
+	int colorNo = 11;
 	if(!flag)
 		return "";
 	else
@@ -287,6 +316,8 @@ void productModularLattice::graphicRepresentation(const string& filename, bool c
 	vector<map<int,int>> indices2scc = hoge.second;
 	//Re-spanning edeges
 	vector<set<int>> sccLowercover = SCClowercovers(scc, indices2scc, irreducibleGraph);
+	//reduce reduntant edges
+	reduceLowercovers(sccLowercover);
 	//colinear relationship for scc
 	set<vector<int>> sccCollinear = SCCcollinear(scc, indices2scc);
 	int a = 0;

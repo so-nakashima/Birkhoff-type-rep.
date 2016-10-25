@@ -123,7 +123,7 @@ vector<int> quasiLattice::lowerCover(const vector<int>& irreducibles){
 
 vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& irreducibles){
 	vector<int> lowers;
-	set<int> taboo;
+	//set<int> taboo;
 	//vector<int> covers = lowerCover(irreducibles);
 	if(elem == -1)
 		return vector<int>();
@@ -133,6 +133,7 @@ vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& i
 			//taboo.insert(covers[i]);
 		}
 	}
+	/*
 	rep(i,lowers.size()){
 		rep(j, lowers.size()){
 			if(lowers[i] == lowers[j])
@@ -146,7 +147,8 @@ vector<int> quasiLattice::joinRepresentation(int elem, const std::vector<int>& i
 		if(taboo.find(lowers[i]) == taboo.end())
 			res.push_back(lowers[i]);
 	}
-	return res;
+	return res;*/
+	return lowers;
 }
 
 modularLattice::modularLattice(istream& in): quasiLattice(in){}
