@@ -173,3 +173,7 @@ std::vector<std::vector<int>> modularLattice::colinearSets(std::vector<int> irre
 	}
 	return res;
 }
+
+bool modularLattice::is_collinear(int a, int b, int c){
+	return pairwiseIncomparable(a,b,c) && join(a,b) == join(b,c) && join(c,a) == join(a,b);
+}

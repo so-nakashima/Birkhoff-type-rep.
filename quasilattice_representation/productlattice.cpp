@@ -221,7 +221,7 @@ void productQuasiLattice::graphicRepresentation(const string& filename){
 productModularLattice::productModularLattice(modularLattice* lat,int n, std::function<bool(int,int, int, int)> oracle) : productQuasiLattice(lat, n, oracle){
 	mlattice = lat;
 }
-
+/*
 std::set<std::vector<int>> productModularLattice::SCCcollinear(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>> indices2scc){
 	set<vector<int>> res;
 	for(int i = 0; i != power; i++){
@@ -235,6 +235,26 @@ std::set<std::vector<int>> productModularLattice::SCCcollinear(const std::vector
 			vector<int> temp; temp.push_back(scc1); temp.push_back(scc2); temp.push_back(scc3);
 			std::sort(temp.begin(), temp.end());
 			res.insert(temp);
+		}
+	}
+	return res;
+}*/
+std::set<std::vector<int>> productModularLattice::SCCcollinear(const std::vector<std::vector<int>>& scc, std::vector<std::map<int,int>> indices2scc){
+	set<vector<int>> res;
+	for(int i = 0; i != scc.size(); i++){
+		for(int j = i + 1; j < scc.size(); j++){
+			for(int k = j + 1; k < scc.size(); k++){
+				int crd1,crd2,crd3;//coordinate
+				int elm1,elm2,elm3;//elements
+				crd1 = int2indices[scc[i][0]].first; elm1 = int2indices[scc[i][0]].second;
+				crd2 = int2indices[scc[j][0]].first; elm2 = int2indices[scc[j][0]].second;
+				crd3 = int2indices[scc[k][0]].first; elm3 = int2indices[scc[k][0]].second;
+				vector<int>* v1,* v2,* v3; v1 = &groundBases[crd1][elm1]; v2 = &groundBases[crd2][elm2]; v3 = &groundBases[crd3][elm3];
+				if(mlattice->is_collinear((*v1)[crd1], (*v2)[crd1], (*v3)[crd1]) && mlattice->is_collinear((*v1)[crd2], (*v2)[crd2], (*v3)[crd2]) && mlattice->is_collinear((*v1)[crd3], (*v2)[crd3], (*v3)[crd3])){
+					vector<int> temp; temp.push_back(i); temp.push_back(j); temp.push_back(k);
+					res.insert(temp);
+				}
+			}
 		}
 	}
 	return res;

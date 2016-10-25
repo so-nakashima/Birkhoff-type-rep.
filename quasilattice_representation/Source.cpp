@@ -14,7 +14,7 @@
 
 using namespace std;
 
-string outfile = "graphviz\\reiSOME";
+string outfile = "graphviz\\serios";
 string infile = "lattice\\modular3.txt";
 //string infile = "lattice\\distributive1.txt";
 
@@ -51,11 +51,12 @@ int main(){
 	//auto fuga = l.principal_ideal(s);
 	 
 	//bool flag = pl.compare(2, "a", 1, "b");
-	vector<int> vec;/*
-	for(int i = 1; i != 6; i++){
+	//vector<int> vec;
+	/*for(int i = 1; i != 6; i++){
 		vec.push_back(i);
 	}*/
 	//vec.push_back(1);vec.push_back(2);vec.push_back(3);vec.push_back(4); vec.push_back(5);
+	bool funi = l.is_collinear(1,2,3);
 	//auto hoge = l.colinearSets(vec);
 
 	//productQuasiLattice pl(&l,3,oracle);
