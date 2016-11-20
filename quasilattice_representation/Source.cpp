@@ -9,6 +9,7 @@
 #include "lattice.h"
 #include "productlattice.h"
 #include "graph.h"
+#include "DM_decomposition.h"
 
 #define rep(i,n) for(int i = 0; i != n; i++)
 
@@ -36,7 +37,7 @@ bool oracle(int i, int j, int a, int b){
 }
 
 int main(){
-	
+	check();
 	/*
 	Edge e1(0,4,0); Edge e2(0,1,0);Edge e3(1,0,0);Edge e4(1,2,0);Edge e5(2,3,0);Edge e6(3,2,0);
 	Graph g;
