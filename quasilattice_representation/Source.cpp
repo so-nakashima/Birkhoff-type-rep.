@@ -14,8 +14,8 @@
 
 using namespace std;
 
-string outfile = "graphviz\\end_object7";
-string infile = "lattice\\modular4.txt";
+string outfile = "graphviz\\end_object17";
+string infile = "lattice\\modular2.txt";
 //string infile = "lattice\\distributive1.txt";
 
 std::ifstream file(infile.c_str());
@@ -28,8 +28,11 @@ bool oracle(int i, int j, int a, int b){
 	//return (i != 2 || a == 3) && (j != 2 || b == 3);
 	//return (i != 2 || a == 3) && (j != 2 || b == 3) && (i != 1 || a != 1) && (j != 1 || b != 1);
 	//return a == b;
+	return (i == 0 || j == 0) || (i % j != 0 && j % i != 0) || (i % j == 0 && l.compare(a,b)) || (j % i == 0 && l.compare(b,a));
 	//return (i != 1 || a != 1) && (j != 1 || b != 1);
-	return (i % 2 != j % 2) || (i == j) || (i < j && l.compare(a,b)) || (i > j && l.compare(b,a));
+	//return (i % 2 != j % 2) || (i == j) || (i < j && l.compare(a,b)) || (i > j && l.compare(b,a));
+	//return  (i == j) || (i < j && l.compare(a,b)) || (i > j && l.compare(b,a));
+	//return ((i % 2 != j % 2) || (i == j) || (i < j && l.compare(a,b)) || (i > j && l.compare(b,a))) && ((i != 1 && i != 0) || a != 1) && ((j != 1 && j != 0) || b != 1);
 }
 
 int main(){
@@ -61,7 +64,7 @@ int main(){
 	//auto hoge = l.colinearSets(vec);
 
 	//productQuasiLattice pl(&l,3,oracle);
-	productModularLattice pl(&l, 5, oracle);
+	productModularLattice pl(&l, 10, oracle);
 	pl.graphicRepresentation(outfile, true);
 	return 0;
 }

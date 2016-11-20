@@ -298,6 +298,7 @@ void productModularLattice::output2graphviz(std::string filename, const std::vec
 	int counter = 0;
 	for(auto itr = sccCollinears.begin(); itr != sccCollinears.end(); itr++){
 		outfile << "  " << (*itr)[0] << " -> " << (*itr)[1] << " -> " << (*itr)[2] << " [dir = none, style = \"dashed\", color = " << int2string(counter, colormode) << "];" << endl;
+		outfile << "  {rank = same;" << (*itr)[0] << "; " << (*itr)[1] << "; " << (*itr)[2] << ";}" << endl;
 		counter++;
 	}
 

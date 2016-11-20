@@ -76,12 +76,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DM_decomposition.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="lattice.cpp" />
     <ClCompile Include="productlattice.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DM_decomposition.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="lattice.h" />
     <ClInclude Include="productlattice.h" />
